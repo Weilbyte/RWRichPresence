@@ -32,7 +32,6 @@ namespace RimRPC
             RimRPC.prsnc.smallImageKey = null;
             RimRPC.prsnc.smallImageText = null;
             DiscordRPC.UpdatePresence(ref RimRPC.prsnc);
-            Log.Message("[RichPresence] Pushed presence update to RPC.");
         }
 
         public static void PushState(Map map)
@@ -61,7 +60,6 @@ namespace RimRPC
                 RimRPC.prsnc.smallImageText = "Playing!";
             }
             DiscordRPC.UpdatePresence(ref RimRPC.prsnc);
-            Log.Message("[RichPressence] Pushed presence update to RPC.");
         }
     }
 }
