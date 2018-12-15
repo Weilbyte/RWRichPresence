@@ -10,7 +10,7 @@ Go to the releases tab and grab the latest zip. In it you will find two folders,
 
 You might notice the installation Is different than other mods, because it also adds a 0discord-rpc.dll file into your RimWorldWin_Data/Mono (RimWorldWin64_Data/Mono if youre running the 64bit version) folder. That DLL is needed to be in the mono folder and, trust me I'd have it in the mod's assembly folder but the problem is the game cant load it from the assembly folder (and I have no idea why).
 
-Discord-rpc.dll file is gotten directly from Discord's GitHub (https://github.com/discordapp/discord-rpc). Go to releases tab and choose the windows one, open the zip, find the win32 dynamic folder and put the discord-rpc.dll into your RimWorldWin_Data/Mono then rename it to '0discord-rpc.dll'. 
+Discord-rpc.dll file is gotten directly from Discord's GitHub (https://github.com/discordapp/discord-rpc). Go to releases tab and choose the windows one, open the zip, find the win64/32 (depends on if you're running the 32 bit version or not) dynamic folder and put the discord-rpc.dll into your RimWorldWin_Data64/Mono then rename it to '0discord-rpc.dll'. 
 
 #
 For Discord to recognize that youre playing it and add the presence you need to add the RimWorld as a game in your Discord settings.
