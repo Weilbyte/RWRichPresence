@@ -1,16 +1,51 @@
 
-![alt text](https://i.imgur.com/TGihCLc.png)
+<p align="center">
+<img src="https://i.imgur.com/ruELjgO.png">
+</p>
 
-# Introduction
-RWRichPresence is a mod I've made for the RimWorld that lets it interface with Discord and lets it have a rich presence.
-Currently the rich presence shows your colony name, days (and hours into the day) and the current quadrum - keeping it as minimal as possible. It updates your rich presence twice per ingame hour. You are free to look into the code if you want to do something like this yourself for another application or game. 
+# RWRichPresence
+RWRichPresence updates your Discord status with some information about your game. Now updated for the latest version of the game - 1.0!
 
-# Installation
-Go to the releases tab and grab the latest zip. In it you will find two folders, 'Mods' and 'RimWorldWin_Data'. Drop both of these into the root of your game folder (the folder containing the rimworld exe). Only Windows version as of now. Might work with other OS too, havent really tested that.
+## Feautures
 
-You might notice the installation Is different than other mods, because it also adds a 0discord-rpc.dll file into your RimWorldWin_Data/Mono (RimWorldWin64_Data/Mono if youre running the 64bit version) folder. That DLL is needed to be in the mono folder and, trust me I'd have it in the mod's assembly folder but the problem is the game cant load it from the assembly folder (and I have no idea why).
+* Display various game information 
+* Customizable text 
+* Plenty of settings, so you can enable and disable certain aspects!
 
-Discord-rpc.dll file is gotten directly from Discord's GitHub (https://github.com/discordapp/discord-rpc). Go to releases tab and choose the windows one, open the zip, find the win64/32 (depends on if you're running the 32 bit version or not) dynamic folder and put the discord-rpc.dll into your RimWorldWin_Data64/Mono then rename it to '0discord-rpc.dll'. 
+*Currently shows:*
+* Colony name
+* Amount of days colony has lasted
+* Hour of the current day
+* Quadrum
+* Amount of time your game has been running for
+* Year
 
-#
-For Discord to recognize that youre playing it and add the presence you need to add the RimWorld as a game in your Discord settings.
+## Installation
+*Skip to step 3 if you have the mod from Steam Workshop*
+
+1. Download the latest release [(link)](https://github.com/Weilbyte/RWRichPresence/releases)
+2. Extract the `RimRPC` folder from the zip to your RimWorld Mod folder as per usual.
+3. Go to Discord's `discord-rpc` release page. [(link)](https://github.com/discordapp/discord-rpc/releases)
+4. Download `discord-rpc-win.zip`.
+5. Open the zip and follow instructions below depending on your PC architecture:  
+*(32 bit)*  Copy  `discord-rpc\win32-dynamic\bin\discord-rpc.dll` into your RimWorld folder - `RimWorld\RimWorldWin_Data\Mono`  
+*(64 bit)* Copy `discord-rpc\win64-dynamic\bin\discord-rpc.dll` into your RimWorld folder - `RimWorld\RimWorldWin64_Data\Mono`
+6. Rename `discord-rpc.dll` to `0discord-rpc.dll`.
+
+Thats pretty much it, youre set. 
+
+##  Usage
+Can be added and removed (spits out a single error that you can ignore) mid-game.  
+Once in-game, presence will update twice every **in-game** hour which equals to once every *20.5* **real-time** seconds.
+
+There is a mod settings menu which you can use to tweak what is displayed. From there you can also set custom text (as shown in the image) to replace either the top or bottom line.
+
+
+Make sure RimWorld is added as a game in Discord's settings.
+
+## Credits
+Jdalt490
+
+## Links
+
+[Steam](https://steamcommunity.com/sharedfiles/filedetails/?id=1463057070)
