@@ -5,8 +5,7 @@ namespace RimRPC
 {
     internal class DiscordRPC
     {
-        //DLL Imports here. Apart from that we dont do anything in here for the rest of the developement.
-        //Make sure the discord-rpc.dll is in RimWorldWin_Data\Mono or else the game will crash.
+        //DLL Imports here. Make sure the discord-rpc.dll is in the game's mono folder or else the game will crash.
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void ReadyCallback();
 
