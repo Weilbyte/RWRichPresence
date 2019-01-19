@@ -2,6 +2,7 @@
 using System;
 using System.Reflection;
 using Verse;
+using UnityEngine;
 
 namespace RimRPC
 {
@@ -9,7 +10,7 @@ namespace RimRPC
     {
         public Mod(ModContentPack content) : base(content)
         {
-            HarmonyInstance femboyfoxes = HarmonyInstance.Create("neon.rimworld.rimrpc.main");
+            HarmonyInstance femboyfoxes = HarmonyInstance.Create("weilbyte.rimworld.rimrpc.main"); 
             MethodInfo targetmethod = AccessTools.Method(typeof(Verse.GenScene), "GoToMainMenu");
             HarmonyMethod postfixmethod = new HarmonyMethod(typeof(RimRPC).GetMethod("GoToMainMenu_Postfix"));
             femboyfoxes.Patch(targetmethod, null, postfixmethod);
@@ -23,6 +24,8 @@ namespace RimRPC
         internal static DiscordRPC.RichPresence prsnc;
         internal static string Colony;
         internal static int onDay;
+        internal static long started = ((DateTime.UtcNow.Ticks - new DateTime(1970, 1, 1).Ticks) / TimeSpan.TicksPerSecond);
+
 
         public static void BootMeUp()
         {
@@ -36,7 +39,7 @@ namespace RimRPC
             DiscordRPC.Initialize("428272711702282252", ref eventHandlers, true, "0612");
             prsnc = default(DiscordRPC.RichPresence);
             prsnc.largeImageKey = "logo";
-            prsnc.state = "Main Menu";
+            prsnc.state = "Main Menu";   
             DiscordRPC.UpdatePresence(ref RimRPC.prsnc);
             ReadyCallback();
         }
@@ -55,16 +58,19 @@ namespace RimRPC
 
         private static void ErrorCallback(int errorCode, string message)
         {
+            Log.Message("[RichPresence] Oopsie woopsie. We made a wittle fucky wucky!");
+            Log.Message("[RichPresence] ErrorCallback: " + errorCode + " " + message);
         }
 
         private static void DisconnectedCallback(int errorCode, string message)
         {
-            Log.Message("[Rich PresOwOnce] oopsie woopsie. we made a wittle fucky wucky!");
+            Log.Message("[RichPresence] Oopsie woopsie. We made a wittle fucky wucky!");
+            Log.Message("[RichPresence] DisconnectedCallback: " + errorCode + " " + message);
         }
 
         private static void ReadyCallback()
         {
-            Log.Message("[Rich Presence] Discord Rich Presence is loaded and running!");
+            Log.Message("[RichPresence] Running");
         }
 
         public static void GoToMainMenu_Postfix()
