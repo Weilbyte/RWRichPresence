@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
 	<name>RimRPC - RichPresence</name>
-	<author>NeonTrash</author>
+	<author>Weilbyte</author>
 	<targetVersion>1.0.0</targetVersion>
 	<description>Discord Rich Presence for RimWorld!
 	Now for 1.0</description>
