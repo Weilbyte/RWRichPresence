@@ -1,7 +1,7 @@
 ﻿using RimWorld;
-using Verse;
-using RimWorld.Planet;
+using System;
 using System.Linq;
+using Verse;
 
 namespace RimRPC
 {
@@ -12,6 +12,7 @@ namespace RimRPC
         internal static int days;
         internal static int dayhour;
         internal static float colonistnumber;
+        internal static Quadrum quadrum;
 
         public static string GetColonyName()
         {
@@ -36,7 +37,69 @@ namespace RimRPC
             RimRPC.prsnc.smallImageKey = null;
             RimRPC.prsnc.smallImageText = null;
             DiscordRPC.UpdatePresence(ref RimRPC.prsnc);
-            //Log.Message("[RichPresence] Pushed presence update to RPC."); commented to remove log spam
+        }
+        
+        public static string BuildString(string which)
+        {
+            if (which == "state")
+            {
+                string state = "";
+                if (RWRPCMod.settings.RPC_CustomBottom)
+                {
+                    return RWRPCMod.settings.RPC_CustomBottomText;
+                }
+                if (RWRPCMod.settings.RPC_Day)
+                {
+                    state += "Day " + days;
+                }
+                if (RWRPCMod.settings.RPC_Day && RWRPCMod.settings.RPC_Hour)
+                {
+                    state += " (" + dayhour + "h)";
+                }
+                if (RWRPCMod.settings.RPC_Quadrum)
+                {
+                    if (RWRPCMod.settings.RPC_Day)
+                    {
+                        state += " | ";
+                    }
+                    state += quadrum;
+                }
+                if (RWRPCMod.settings.RPC_Year)
+                {
+                    if (RWRPCMod.settings.RPC_Quadrum || RWRPCMod.settings.RPC_Day)
+                    {
+                        state += " | ";
+                    }
+                    if (RWRPCMod.settings.RPC_YearShort)
+                    {
+                        state += "y" + years;
+                        return state;
+                    }
+                    state += "Year " + years;
+                }
+                return state;
+                
+            }
+            if (which == "details")
+            {
+                if (RWRPCMod.settings.RPC_CustomTop)
+                {
+                    return RWRPCMod.settings.RPC_CustomTopText;
+                }
+                if (RWRPCMod.settings.RPC_Colony)
+                {
+                    if (RWRPCMod.settings.RPC_ColonistCount)
+                    {
+                        return colonyname + " (" + colonistnumber + ")";
+                    }
+                    return colonyname;
+                }
+                if (RWRPCMod.settings.RPC_ColonistCount)
+                {
+                    return colonistnumber + " Colonists";
+                }
+            }
+            return null;
         }
 
         public static void PushState(Map map)
@@ -52,22 +115,23 @@ namespace RimRPC
                 float longitude = (map == null) ? 0f : Find.WorldGrid.LongLatOf(map.Tile).x;
                 colonyname = GetColonyName();
                 years = days / 60;
+                colonistnumber = (float)PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists.Count<Pawn>();
                 days = GenDate.DaysPassed;
                 dayhour = GenDate.HourOfDay(Find.TickManager.TicksAbs, longitude);
-                colonistnumber = (float)PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists.Count<Pawn>();
-                //Season season = GenDate.Season(Find.TickManager.TicksAbs, latitude, longitude); 
-                //Quadrum updates seem enough.
-                Quadrum quadrum = GenDate.Quadrum(Find.TickManager.TicksAbs, longitude);
+                quadrum = GenDate.Quadrum(Find.TickManager.TicksAbs, longitude);
 
                 BiomeDef biome = Find.WorldGrid[map.uniqueID].biome;
-                RimRPC.prsnc.state = "Year " + years + " Day " + days + " (" + dayhour + "h) | " + quadrum;
-                RimRPC.prsnc.details = colonyname + ", " + colonistnumber + " Colonists"; 
+                RimRPC.prsnc.state = BuildString("state");
+                RimRPC.prsnc.details = BuildString("details");
                 RimRPC.prsnc.largeImageText = "RimWorld";
                 RimRPC.prsnc.smallImageKey = "inmap";
                 RimRPC.prsnc.smallImageText = "Playing!";
+                if (RWRPCMod.settings.RPC_Time)
+                {
+                    RimRPC.prsnc.startTimestamp = RimRPC.started;
+                }
             }
             DiscordRPC.UpdatePresence(ref RimRPC.prsnc);
-            //Log.Message("[RichPressence] Pushed presence update to RPC."); commented to remove log spam
         }
     }
 }
