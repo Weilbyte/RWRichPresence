@@ -18,6 +18,7 @@ namespace RimRPC
             if (pushcooldown > 1250)
             {
                 StateHandler.PushState(map);
+                //Log.Message("[RichPressence] Calling presence update..."); commented to remove log spam
                 pushcooldown = 0;
             }
             base.MapComponentTick();
