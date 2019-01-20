@@ -51,7 +51,7 @@ namespace RimRPC
         {
             settings = GetSettings<RWRPCSettings>();
         }
-        public override string SettingsCategory() => "SettingsCategoryLabel".Translate();
+        public override string SettingsCategory() => "RPC_CategoryLabel".Translate();
 
         public override void DoSettingsWindowContents(Rect inRect)
         {
