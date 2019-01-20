@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
-    <SettingsCategoryLabel>RimRPC</SettingsCategoryLabel>
+    <RPC_CategoryLabel>RimRPC</RPC_CategoryLabel>
     <RPC_ColonyLabel>Colony name</RPC_ColonyLabel>
     <RPC_ColonistCountLabel>Colonist count</RPC_ColonistCountLabel>
     <RPC_YearLabel>Current year</RPC_YearLabel>
