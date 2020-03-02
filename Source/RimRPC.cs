@@ -1,4 +1,4 @@
-﻿using Harmony;
+﻿using HarmonyLib;
 using System;
 using System.Reflection;
 using Verse;
@@ -10,7 +10,7 @@ namespace RimRPC
     {
         public Mod(ModContentPack content) : base(content)
         {
-            HarmonyInstance femboyfoxes = HarmonyInstance.Create("weilbyte.rimworld.rimrpc.main"); 
+            var femboyfoxes = new Harmony("weilbyte.rimworld.rimrpc.main");
             MethodInfo targetmethod = AccessTools.Method(typeof(Verse.GenScene), "GoToMainMenu");
             HarmonyMethod postfixmethod = new HarmonyMethod(typeof(RimRPC).GetMethod("GoToMainMenu_Postfix"));
             femboyfoxes.Patch(targetmethod, null, postfixmethod);
