@@ -29,7 +29,7 @@ RWRichPresence updates your Discord status with some information about your game
 4. Download `discord-rpc-win.zip` for windows or `discord-rpc-linux.zip` if you are using linux.
 5. Open the zip and follow instructions below depending on your PC architecture and platform:  
   * *(Windows 32 bit)*  Copy  `discord-rpc\win32-dynamic\bin\discord-rpc.dll` into your RimWorld folder - `RimWorld\RimWorldWin_Data\Mono`  
-  * *(Windows 64 bit)* Copy `discord-rpc\win64-dynamic\bin\discord-rpc.dll` into your RimWorld folder - `RimWorld\RimWorldWin64_Data\Mono`
+  * *(Windows 64 bit)* Copy `discord-rpc\win64-dynamic\bin\discord-rpc.dll` into your RimWorld folder - `RimWorld\RimWorldWin64_Data\Mono` or for 1.1 `Rimworld\RimWorldWin64_Data\Plugins`
   * *(Linux 64 bit)* Copy `discord-rpc\linux-dynamic\lib\discord-rpc.so` into your RimWorld folder - `RimWorld/RimWorldLinux_Data/Mono/x86_64/`
 6. Rename `discord-rpc.dll` to `0discord-rpc.dll`.
   * On linux you will need to rename`discord-rpc.so` to `lib0discord-rpc.so` or `0discord-rpc`
