@@ -10,11 +10,11 @@ namespace RimRPC
     {
         public Mod(ModContentPack content) : base(content)
         {
-            var femboyfoxes = new Harmony("weilbyte.rimworld.rimrpc.main");
+            var femboyfoxes = new Harmony("weilbyte.rimworld.rimrpc");
             MethodInfo targetmethod = AccessTools.Method(typeof(Verse.GenScene), "GoToMainMenu");
             HarmonyMethod postfixmethod = new HarmonyMethod(typeof(RimRPC).GetMethod("GoToMainMenu_Postfix"));
             femboyfoxes.Patch(targetmethod, null, postfixmethod);
-            Log.Message("[RichPresence] Patched");
+            Log.Message("RichPresence :: Patched");
             RimRPC.BootMeUp();
         }
     }
@@ -58,19 +58,19 @@ namespace RimRPC
 
         private static void ErrorCallback(int errorCode, string message)
         {
-            Log.Message("[RichPresence] Oopsie woopsie. We made a wittle fucky wucky!");
-            Log.Message("[RichPresence] ErrorCallback: " + errorCode + " " + message);
+            Log.Message("RichPresence :: Oopsie woopsie. We made a wittle fucky wucky!");
+            Log.Message("RichPresence :: ErrorCallback: " + errorCode + " " + message);
         }
 
         private static void DisconnectedCallback(int errorCode, string message)
         {
-            Log.Message("[RichPresence] Oopsie woopsie. We made a wittle fucky wucky!");
-            Log.Message("[RichPresence] DisconnectedCallback: " + errorCode + " " + message);
+            Log.Message("RichPresence :: Oopsie woopsie. We made a wittle fucky wucky!");
+            Log.Message("RichPresence :: DisconnectedCallback: " + errorCode + " " + message);
         }
 
         private static void ReadyCallback()
         {
-            Log.Message("[RichPresence] Running");
+            Log.Message("RichPresence :: Running");
         }
 
         public static void GoToMainMenu_Postfix()
