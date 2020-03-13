@@ -9,5 +9,5 @@
   <description>Discord Rich Presence for RimWorld!
   Now for 1.1 with 1.0 support!</description>
   <url></url>
-  <packageId>discord.rpc.core</packageId>
+  <packageId>weilbyte.rimrpc</packageId>
 </ModMetaData>

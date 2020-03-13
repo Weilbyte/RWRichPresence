@@ -17,7 +17,7 @@ namespace RimRPC
                 foreach (var map in Find.Maps.Where(m => m.GetComponent<MapCompHandler>() == null))
                 {
                     map.components.Add(new MapCompHandler(map));
-                    Log.Message("[RichPresence] Injected handler to existing map!");
+                    Log.Message("RichPresence :: Injected handler to existing map!");
                 }
 
                 Destroy(this);
