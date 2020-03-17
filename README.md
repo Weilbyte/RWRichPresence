@@ -46,7 +46,7 @@ There is a mod settings menu which you can use to tweak what is displayed. From 
 Make sure RimWorld is added as a game in Discord's settings.
 
 ## Credits
-Jdalt490
+Jdalt40
 
 ## Links
 
