@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using Verse;
-using SettingsHelper;
 
 namespace RimRPC
 {
@@ -53,27 +52,28 @@ namespace RimRPC
             Listing_Standard listing_Standard = new Listing_Standard();
             listing_Standard.Begin(inRect);
             //Default settings
-            listing_Standard.AddLabeledCheckbox("RPC_ColonyLabel".Translate() + " ", ref settings.RPC_Colony);
-            listing_Standard.AddLabeledCheckbox("RPC_ColonistCountLabel".Translate() + " ", ref settings.RPC_ColonistCount);
-            listing_Standard.AddLabeledCheckbox("RPC_YearLabel".Translate() + " ", ref settings.RPC_Year);
-            listing_Standard.AddLabeledCheckbox("RPC_YearShortLabel".Translate() + " ", ref settings.RPC_YearShort);
-            listing_Standard.AddLabeledCheckbox("RPC_QuadrumLabel".Translate() + " ", ref settings.RPC_Quadrum);
-            listing_Standard.AddLabeledCheckbox("RPC_DayLabel".Translate() + "  ", ref settings.RPC_Day);
-            listing_Standard.AddLabeledCheckbox("RPC_HourLabel".Translate() + "  ", ref settings.RPC_Hour);
-            listing_Standard.AddLabeledCheckbox("RPC_TimeLabel".Translate() + "  ", ref settings.RPC_Time);
+            listing_Standard.CheckboxLabeled("RPC_ColonyLabel".Translate() + " ", ref settings.RPC_Colony);
+            listing_Standard.CheckboxLabeled("RPC_ColonistCountLabel".Translate() + " ", ref settings.RPC_ColonistCount);
+            listing_Standard.CheckboxLabeled("RPC_YearLabel".Translate() + " ", ref settings.RPC_Year);
+            listing_Standard.CheckboxLabeled("RPC_YearShortLabel".Translate() + " ", ref settings.RPC_YearShort);
+            listing_Standard.CheckboxLabeled("RPC_QuadrumLabel".Translate() + " ", ref settings.RPC_Quadrum);
+            listing_Standard.CheckboxLabeled("RPC_DayLabel".Translate() + "  ", ref settings.RPC_Day);
+            listing_Standard.CheckboxLabeled("RPC_HourLabel".Translate() + "  ", ref settings.RPC_Hour);
+            listing_Standard.CheckboxLabeled("RPC_TimeLabel".Translate() + "  ", ref settings.RPC_Time);
             //Custom field settings
-            listing_Standard.AddLabeledCheckbox("CustomTopCheckbox".Translate() + "  ", ref settings.RPC_CustomTop);
+            listing_Standard.CheckboxLabeled("CustomTopCheckbox".Translate() + "  ", ref settings.RPC_CustomTop);
             if (RWRPCMod.settings.RPC_CustomTop)
             {
-                listing_Standard.AddLabeledTextField("CustomTopLabel".Translate() + " ", ref settings.RPC_CustomTopText);
+                settings.RPC_CustomTopText = listing_Standard.TextEntryLabeled("CustomTopLabel".Translate() + " ", settings.RPC_CustomTopText);
             }
-            listing_Standard.AddLabeledCheckbox("CustomBottomCheckbox".Translate() + "  ", ref settings.RPC_CustomBottom);
+            listing_Standard.CheckboxLabeled("CustomBottomCheckbox".Translate() + "  ", ref settings.RPC_CustomBottom);
             if (RWRPCMod.settings.RPC_CustomBottom)
             {
-                listing_Standard.AddLabeledTextField("CustomBottomLabel".Translate() + " ", ref settings.RPC_CustomBottomText);
+                settings.RPC_CustomBottomText = listing_Standard.TextEntryLabeled("CustomBottomLabel".Translate() + " ", settings.RPC_CustomBottomText);
             }
             if (listing_Standard.ButtonText("RPC_UpdateLabel".Translate()))
             {
+                Verse.Log.Message("UPDATED");
                 var world = Current.Game != null ? Current.Game.World : null;
                 if (world != null)
                 {

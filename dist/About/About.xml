@@ -5,9 +5,10 @@
   <supportedVersions>
     <li>1.0</li>
     <li>1.1</li>
+    <li>1.2</li>
   </supportedVersions>
   <description>Discord Rich Presence for RimWorld!
-  Now for 1.1 with 1.0 support!</description>
+  1.2 support is here!</description>
   <url></url>
   <packageId>weilbyte.rimrpc</packageId>
 </ModMetaData>
