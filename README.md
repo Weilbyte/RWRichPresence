@@ -4,7 +4,7 @@
 </p>
 
 # RWRichPresence
-RWRichPresence updates your Discord status with some information about your game. Now updated for the latest version of the game - 1.1!
+RWRichPresence updates your Discord status with some information about your game. Now updated for the latest version of the game - 1.3!
 
 ## Feautures
 
