@@ -1,5 +1,4 @@
 ﻿using RimWorld;
-using System;
 using System.Linq;
 using Verse;
 
@@ -7,14 +6,14 @@ namespace RimRPC
 {
     public class StateHandler
     {
-        internal static string colonyname;
-        internal static int years;
-        internal static int days;
-        internal static int dayhour;
-        internal static float colonistnumber;
-        internal static Quadrum quadrum;
+        private static string _colonyname;
+        private static int _years;
+        private static int _days;
+        private static int _dayhour;
+        private static float _colonistnumber;
+        private static Quadrum _quadrum;
 
-        public static string GetColonyName()
+        private static string GetColonyName()
         {
             return Faction.OfPlayer.Name;
         }
@@ -23,115 +22,127 @@ namespace RimRPC
         {
             long ticks = Find.TickManager.TicksAbs;
             int num = (int)(ticks / 60000L);
+            
             if (num < 0L)
-            {
                 ticks--;
-            }
+            
             return num;
         }
 
         public static void MenuState()
         {
-            RimRPC.prsnc.details = "Main Menu";
-            RimRPC.prsnc.state = null;
-            RimRPC.prsnc.smallImageKey = null;
-            RimRPC.prsnc.smallImageText = null;
-            DiscordRPC.UpdatePresence(ref RimRPC.prsnc);
+            RimRPC.Presence.Details = "RPC_MainMenu".Translate();
+            RimRPC.Presence.State = null;
+            RimRPC.Presence.SmallImageKey = null;
+            RimRPC.Presence.SmallImageText = null;
+            DiscordRPC.UpdatePresence(ref RimRPC.Presence);
         }
-        
-        public static string BuildString(string which)
+
+        private static string BuildString(string which)
         {
+            var state = "";
+
             if (which == "state")
-            {
-                string state = "";
-                if (RWRPCMod.settings.RPC_CustomBottom)
-                {
-                    return RWRPCMod.settings.RPC_CustomBottomText;
-                }
-                if (RWRPCMod.settings.RPC_Day)
-                {
-                    state += "Day " + days;
-                }
-                if (RWRPCMod.settings.RPC_Day && RWRPCMod.settings.RPC_Hour)
-                {
-                    state += " (" + dayhour + "h)";
-                }
-                if (RWRPCMod.settings.RPC_Quadrum)
-                {
-                    if (RWRPCMod.settings.RPC_Day)
-                    {
-                        state += " | ";
-                    }
-                    state += quadrum;
-                }
-                if (RWRPCMod.settings.RPC_Year)
-                {
-                    if (RWRPCMod.settings.RPC_Quadrum || RWRPCMod.settings.RPC_Day)
-                    {
-                        state += " | ";
-                    }
-                    if (RWRPCMod.settings.RPC_YearShort)
-                    {
-                        state += "y" + years;
-                        return state;
-                    }
-                    state += "Year " + years;
-                }
-                return state;
-                
-            }
+                return GetState(state);
+
             if (which == "details")
+                return GetDetails();
+            
+            return null;
+        }
+
+        private static string GetState(string state)
+        {
+            if (RWRPCMod.Settings.RpcCustomBottom)
+                return RWRPCMod.Settings.RpcCustomBottomText;
+            
+            if (RWRPCMod.Settings.RpcDay)
+                state += $"{"RPC_Day".Translate()} {_days}";
+            
+            if (RWRPCMod.Settings.RpcDay && RWRPCMod.Settings.RpcHour)
+                state += $" ({_dayhour}{"RPC_Hour".Translate()})";
+            
+            if (RWRPCMod.Settings.RpcQuadrum)
             {
-                if (RWRPCMod.settings.RPC_CustomTop)
+                if (RWRPCMod.Settings.RpcDay)
                 {
-                    return RWRPCMod.settings.RPC_CustomTopText;
+                    state += " | ";
                 }
-                if (RWRPCMod.settings.RPC_Colony)
-                {
-                    if (RWRPCMod.settings.RPC_ColonistCount)
-                    {
-                        return colonyname + " (" + colonistnumber + ")";
-                    }
-                    return colonyname;
-                }
-                if (RWRPCMod.settings.RPC_ColonistCount)
-                {
-                    return colonistnumber + " Colonists";
-                }
+                state += _quadrum;
             }
+
+            if (RWRPCMod.Settings.RpcYear)
+            {
+                if (RWRPCMod.Settings.RpcQuadrum || RWRPCMod.Settings.RpcDay)
+                    state += " | ";
+                
+                if (RWRPCMod.Settings.RpcYearShort)
+                {
+                    state += $"{_years}{"RPC_ShortYears".Translate()}";
+                    return state;
+                }
+                state += $"{"RPC_Years".Translate()} {_years}";
+            }
+
+            return state;
+        }
+
+        private static string GetDetails()
+        {
+            if (RWRPCMod.Settings.RpcCustomTop)
+                return RWRPCMod.Settings.RpcCustomTopText;
+            
+            if (RWRPCMod.Settings.RpcColony)
+            {
+                if (RWRPCMod.Settings.RpcColonistCount)
+                {
+                    return _colonyname + " (" + _colonistnumber + ")";
+                }
+                return _colonyname;
+            }
+            if (RWRPCMod.Settings.RpcColonistCount)
+            {
+                return _colonistnumber + " RPC_Colonists".Translate();
+            }
+
             return null;
         }
 
         public static void PushState(Map map)
         {
-            var world = Current.Game != null ? Current.Game.World : null;
+            var world = Current.Game?.World;
+            
             if (world == null)
-            {
-                RimRPC.prsnc.details = "Main Menu";
-            }
+                RimRPC.Presence.Details = "RPC_MainMenu".Translate();
+            
             else
             {
                 float latitude = (map == null) ? 0f : Find.WorldGrid.LongLatOf(map.Tile).y;
                 float longitude = (map == null) ? 0f : Find.WorldGrid.LongLatOf(map.Tile).x;
-                colonyname = GetColonyName();
-                years = days / 60;
-                colonistnumber = (float)PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists.Count<Pawn>();
-                days = GenDate.DaysPassed;
-                dayhour = GenDate.HourOfDay(Find.TickManager.TicksAbs, longitude);
-                quadrum = GenDate.Quadrum(Find.TickManager.TicksAbs, longitude);
+                
+                _colonyname = GetColonyName();
+                _years = _days / 60;
+                _colonistnumber = PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists.Count;
+                _days = GenDate.DaysPassed;
+                _dayhour = GenDate.HourOfDay(Find.TickManager.TicksAbs, longitude);
+                _quadrum = GenDate.Quadrum(Find.TickManager.TicksAbs, longitude);
 
-                BiomeDef biome = Find.WorldGrid[map.uniqueID].biome;
-                RimRPC.prsnc.state = BuildString("state");
-                RimRPC.prsnc.details = BuildString("details");
-                RimRPC.prsnc.largeImageText = "RimWorld";
-                RimRPC.prsnc.smallImageKey = "inmap";
-                RimRPC.prsnc.smallImageText = "Playing!";
-                if (RWRPCMod.settings.RPC_Time)
+                if (map != null)
                 {
-                    RimRPC.prsnc.startTimestamp = RimRPC.started;
+                    BiomeDef biome = Find.WorldGrid[map.uniqueID].biome;
                 }
+
+                RimRPC.Presence.State = BuildString("state");
+                RimRPC.Presence.Details = BuildString("details");
+                RimRPC.Presence.LargeImageText = "RimWorld";
+                RimRPC.Presence.SmallImageKey = "inmap";
+                RimRPC.Presence.SmallImageText = "RPC_Playing".Translate();
+
+                if (RWRPCMod.Settings.RpcTime)
+                    RimRPC.Presence.StartTimestamp = RimRPC.Started;
             }
-            DiscordRPC.UpdatePresence(ref RimRPC.prsnc);
+
+            DiscordRPC.UpdatePresence(ref RimRPC.Presence);
         }
     }
 }
