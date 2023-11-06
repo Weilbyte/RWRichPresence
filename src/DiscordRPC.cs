@@ -5,7 +5,6 @@ namespace RimRPC
 {
     internal class DiscordRPC
     {
-        //DLL Imports here. Make sure the discord-rpc.dll is in the game's mono folder or else the game will crash.
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void ReadyCallback();
 
@@ -22,65 +21,44 @@ namespace RimRPC
         public delegate void SpectateCallback(string secret);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void RequestCallback(DiscordRPC.JoinRequest request);
+        public delegate void RequestCallback(JoinRequest request);
 
         public struct EventHandlers
         {
-            public DiscordRPC.ReadyCallback readyCallback;
-
-            public DiscordRPC.DisconnectedCallback disconnectedCallback;
-
-            public DiscordRPC.ErrorCallback errorCallback;
-
-            public DiscordRPC.JoinCallback joinCallback;
-
-            public DiscordRPC.SpectateCallback spectateCallback;
-
-            public DiscordRPC.RequestCallback requestCallback;
+            public ReadyCallback ReadyCallback;
+            public DisconnectedCallback DisconnectedCallback;
+            public ErrorCallback ErrorCallback;
+            public JoinCallback JoinCallback;
+            public SpectateCallback SpectateCallback;
+            public RequestCallback RequestCallback;
         }
 
         [Serializable]
         public struct RichPresence
         {
-            public string state;
-
-            public string details;
-
-            public long startTimestamp;
-
-            public long endTimestamp;
-
-            public string largeImageKey;
-
-            public string largeImageText;
-
-            public string smallImageKey;
-
-            public string smallImageText;
-
-            public string partyId;
-
-            public int partySize;
-
-            public int partyMax;
-
-            public string matchSecret;
-
-            public string joinSecret;
-
-            public string spectateSecret;
-
-            public bool instance;
+            public string State;
+            public string Details;
+            public long StartTimestamp;
+            public long EndTimestamp;
+            public string LargeImageKey;
+            public string LargeImageText;
+            public string SmallImageKey;
+            public string SmallImageText;
+            public string PartyId;
+            public int PartySize;
+            public int PartyMax;
+            public string MatchSecret;
+            public string JoinSecret;
+            public string SpectateSecret;
+            public bool Instance;
         }
 
         [Serializable]
         public struct JoinRequest
         {
-            public string userId;
-
-            public string username;
-
-            public string avatar;
+            public string UserId;
+            public string Username;
+            public string Avatar;
         }
 
         public enum Reply
@@ -91,7 +69,7 @@ namespace RimRPC
         }
 
         [DllImport("0discord-rpc", CallingConvention = CallingConvention.Cdecl, EntryPoint = "Discord_Initialize")]
-        public static extern void Initialize(string applicationId, ref DiscordRPC.EventHandlers handlers, bool autoRegister, string optionalSteamId);
+        public static extern void Initialize(string applicationId, ref EventHandlers handlers, bool autoRegister, string optionalSteamId);
 
         [DllImport("0discord-rpc", CallingConvention = CallingConvention.Cdecl, EntryPoint = "Discord_Shutdown")]
         public static extern void Shutdown();
@@ -100,9 +78,9 @@ namespace RimRPC
         public static extern void RunCallbacks();
 
         [DllImport("0discord-rpc", CallingConvention = CallingConvention.Cdecl, EntryPoint = "Discord_UpdatePresence")]
-        public static extern void UpdatePresence(ref DiscordRPC.RichPresence presence);
+        public static extern void UpdatePresence(ref RichPresence presence);
 
         [DllImport("0discord-rpc", CallingConvention = CallingConvention.Cdecl, EntryPoint = "Discord_Respond")]
-        public static extern void Respond(string userId, DiscordRPC.Reply reply);
+        public static extern void Respond(string userId, Reply reply);
     }
 }

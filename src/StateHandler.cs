@@ -1,137 +1,82 @@
 ﻿using RimWorld;
-using System;
-using System.Linq;
 using Verse;
 
 namespace RimRPC
 {
     public class StateHandler
     {
-        internal static string colonyname;
-        internal static int years;
-        internal static int days;
-        internal static int dayhour;
-        internal static float colonistnumber;
-        internal static Quadrum quadrum;
+        private static string _colonyname;
+        private static string _biome;
+        private static int _years;
+        private static int _days;
+        private static int _dayhour;
+        private static float _colonistnumber;
+        private static Quadrum _quadrum;
 
-        public static string GetColonyName()
-        {
-            return Faction.OfPlayer.Name;
-        }
-
-        public static int GetDaysSurvived()
-        {
-            long ticks = Find.TickManager.TicksAbs;
-            int num = (int)(ticks / 60000L);
-            if (num < 0L)
-            {
-                ticks--;
-            }
-            return num;
-        }
+        private static string GetColonyName() => Faction.OfPlayer.Name;
 
         public static void MenuState()
         {
-            RimRPC.prsnc.details = "Main Menu";
-            RimRPC.prsnc.state = null;
-            RimRPC.prsnc.smallImageKey = null;
-            RimRPC.prsnc.smallImageText = null;
-            DiscordRPC.UpdatePresence(ref RimRPC.prsnc);
+            RimRPC.Presence.Details = "RPC_MainMenu".Translate();
+            RimRPC.Presence.State = null;
+            RimRPC.Presence.SmallImageKey = null;
+            RimRPC.Presence.SmallImageText = null;
+            DiscordRPC.UpdatePresence(ref RimRPC.Presence);
         }
-        
-        public static string BuildString(string which)
+
+        private static string BuildString(string which, string[] args)
         {
+            var state = "";
+
             if (which == "state")
-            {
-                string state = "";
-                if (RWRPCMod.settings.RPC_CustomBottom)
-                {
-                    return RWRPCMod.settings.RPC_CustomBottomText;
-                }
-                if (RWRPCMod.settings.RPC_Day)
-                {
-                    state += "Day " + days;
-                }
-                if (RWRPCMod.settings.RPC_Day && RWRPCMod.settings.RPC_Hour)
-                {
-                    state += " (" + dayhour + "h)";
-                }
-                if (RWRPCMod.settings.RPC_Quadrum)
-                {
-                    if (RWRPCMod.settings.RPC_Day)
-                    {
-                        state += " | ";
-                    }
-                    state += quadrum;
-                }
-                if (RWRPCMod.settings.RPC_Year)
-                {
-                    if (RWRPCMod.settings.RPC_Quadrum || RWRPCMod.settings.RPC_Day)
-                    {
-                        state += " | ";
-                    }
-                    if (RWRPCMod.settings.RPC_YearShort)
-                    {
-                        state += "y" + years;
-                        return state;
-                    }
-                    state += "Year " + years;
-                }
-                return state;
-                
-            }
+                return States.GetState(state, args);
+
             if (which == "details")
-            {
-                if (RWRPCMod.settings.RPC_CustomTop)
-                {
-                    return RWRPCMod.settings.RPC_CustomTopText;
-                }
-                if (RWRPCMod.settings.RPC_Colony)
-                {
-                    if (RWRPCMod.settings.RPC_ColonistCount)
-                    {
-                        return colonyname + " (" + colonistnumber + ")";
-                    }
-                    return colonyname;
-                }
-                if (RWRPCMod.settings.RPC_ColonistCount)
-                {
-                    return colonistnumber + " Colonists";
-                }
-            }
+                return Details.GetDetails(args);
+            
             return null;
         }
 
         public static void PushState(Map map)
         {
-            var world = Current.Game != null ? Current.Game.World : null;
+            var world = Current.Game?.World;
+            
             if (world == null)
-            {
-                RimRPC.prsnc.details = "Main Menu";
-            }
+                RimRPC.Presence.Details = "RPC_MainMenu".Translate();
+            
             else
             {
-                float latitude = (map == null) ? 0f : Find.WorldGrid.LongLatOf(map.Tile).y;
-                float longitude = (map == null) ? 0f : Find.WorldGrid.LongLatOf(map.Tile).x;
-                colonyname = GetColonyName();
-                years = days / 60;
-                colonistnumber = (float)PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists.Count<Pawn>();
-                days = GenDate.DaysPassed;
-                dayhour = GenDate.HourOfDay(Find.TickManager.TicksAbs, longitude);
-                quadrum = GenDate.Quadrum(Find.TickManager.TicksAbs, longitude);
+                var latitude = (map == null) ? 0f : Find.WorldGrid.LongLatOf(map.Tile).y;
+                var longitude = (map == null) ? 0f : Find.WorldGrid.LongLatOf(map.Tile).x;
 
-                BiomeDef biome = Find.WorldGrid[map.uniqueID].biome;
-                RimRPC.prsnc.state = BuildString("state");
-                RimRPC.prsnc.details = BuildString("details");
-                RimRPC.prsnc.largeImageText = "RimWorld";
-                RimRPC.prsnc.smallImageKey = "inmap";
-                RimRPC.prsnc.smallImageText = "Playing!";
-                if (RWRPCMod.settings.RPC_Time)
+                _colonyname = GetColonyName();
+                _years = _days / 60;
+                _colonistnumber = PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists.Count;
+                _days = GenDate.DaysPassed;
+                _dayhour = GenDate.HourOfDay(Find.TickManager.TicksAbs, longitude);
+                _quadrum = GenDate.Quadrum(Find.TickManager.TicksAbs, longitude);
+                _biome = "";
+
+                if (map != null)
                 {
-                    RimRPC.prsnc.startTimestamp = RimRPC.started;
+                    var biome = Find.WorldGrid[map.uniqueID].biome;
+                    _biome = biome.LabelCap;
                 }
+
+                string[] stateArgs = { _years.ToString(), _days.ToString(), _dayhour.ToString(), _quadrum.Label(), _biome };
+                string[] detailsArgs = { _colonyname, _colonistnumber.ToString()};
+
+                RimRPC.Presence.State = BuildString("state", stateArgs);
+                RimRPC.Presence.Details = BuildString("details", detailsArgs);
+                RimRPC.Presence.LargeImageText = "RimWorld";
+                RimRPC.Presence.SmallImageKey = "inmap";
+                RimRPC.Presence.SmallImageText = "RPC_Playing".Translate();
+
+                if (RWRPCMod.Settings.RpcTime)
+                    RimRPC.Presence.StartTimestamp = RimRPC.Started;
             }
-            DiscordRPC.UpdatePresence(ref RimRPC.prsnc);
+
+            DiscordRPC.UpdatePresence(ref RimRPC.Presence);
         }
     }
 }
