@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
     <RPC_CategoryLabel>RimRPC</RPC_CategoryLabel>
-    <RPC_ColonyLabel>Название колонии</RPC_ColonyLabel>
-    <RPC_ColonistCountLabel>Количество колонистов</RPC_ColonistCountLabel>
-    <RPC_YearLabel>Текущий год</RPC_YearLabel>
-    <RPC_YearShortLabel>Сокращенный текст года</RPC_YearShortLabel>
-    <RPC_QuadrumLabel>Текущий квадрум</RPC_QuadrumLabel>
-    <RPC_DayLabel>Текущий день</RPC_DayLabel>
-    <RPC_HourLabel>Час текущего дня</RPC_HourLabel>
+    <RPC_ColonyLabel>Отображение названия колонии</RPC_ColonyLabel>
+    <RPC_ColonistCountLabel>Отоброжение количества колонистов</RPC_ColonistCountLabel>
+	<RPC_BiomeLabel>Отображение биома</RPC_BiomeLabel>
+    <RPC_YearLabel>Отображение года</RPC_YearLabel>
+    <RPC_YearShortLabel>Сокращать отображение года</RPC_YearShortLabel>
+    <RPC_QuadrumLabel>Отображение квадрума</RPC_QuadrumLabel>
+    <RPC_DayLabel>Отображение дня</RPC_DayLabel>
+    <RPC_HourLabel>Отображение часа</RPC_HourLabel>
     <RPC_TimeLabel>Длина игровой сессии (Требуется рестарт)</RPC_TimeLabel>
     <RPC_UpdateLabel>Принудительное обновление RPC</RPC_UpdateLabel>
 	
@@ -18,6 +19,7 @@
 
 	<RPC_MainMenu>В главном меню</RPC_MainMenu>
 	<RPC_Day>День</RPC_Day>
+	<RPC_Biome>Биом</RPC_Biome>
 	<RPC_Colonists>колонистов</RPC_Colonists>
 	<RPC_Hour>ч</RPC_Hour>
 	<RPC_Years>Год</RPC_Years>

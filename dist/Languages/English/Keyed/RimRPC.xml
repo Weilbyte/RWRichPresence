@@ -3,6 +3,7 @@
     <RPC_CategoryLabel>RimRPC</RPC_CategoryLabel>
     <RPC_ColonyLabel>Colony name</RPC_ColonyLabel>
     <RPC_ColonistCountLabel>Colonist count</RPC_ColonistCountLabel>
+    <RPC_BiomeLabel>Current biome</RPC_BiomeLabel>
     <RPC_YearLabel>Current year</RPC_YearLabel>
     <RPC_YearShortLabel>Shorten year text</RPC_YearShortLabel>
     <RPC_QuadrumLabel>Current quadrum</RPC_QuadrumLabel>

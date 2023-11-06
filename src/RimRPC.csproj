@@ -16,7 +16,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\dist\1.3\Assemblies\</OutputPath>
+    <OutputPath>..\dist\1.4\Assemblies\</OutputPath>
     <DefineConstants>
     </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -33,6 +33,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Details.cs" />
     <Compile Include="DiscordRPC.cs" />
     <Compile Include="MapCompInjector.cs" />
     <Compile Include="MapCompHandler.cs" />
@@ -40,6 +41,7 @@
     <Compile Include="RimRPC.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StateHandler.cs" />
+    <Compile Include="States.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Krafs.Rimworld.Ref">
@@ -50,6 +52,7 @@
       <ExcludeAssets>runtime</ExcludeAssets>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

@@ -16,8 +16,6 @@ namespace RimRPC
             
             femboyfoxes.Patch(targetmethod, null, postfixmethod);
             
-            Log.Message("RichPresence :: Patched");
-            
             RimRPC.BootMeUp();
         }
     }

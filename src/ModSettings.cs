@@ -14,6 +14,7 @@ namespace RimRPC
         public bool RpcDay = true;
         public bool RpcHour = true;
         public bool RpcTime = true;
+        public bool RpcBiome;
         public bool RpcCustomTop;
         public bool RpcCustomBottom;
         public string RpcCustomTopText = "Example";
@@ -26,6 +27,7 @@ namespace RimRPC
 
             Scribe_Values.Look(ref RpcColony, "RPC_Colony", true);
             Scribe_Values.Look(ref RpcColonistCount, "RPC_ColonistCount");
+            Scribe_Values.Look(ref RpcBiome, "RPC_Biome");
             Scribe_Values.Look(ref RpcYear, "RPC_Year");
             Scribe_Values.Look(ref RpcYearShort, "RPC_YearShort", true);
             Scribe_Values.Look(ref RpcQuadrum, "RPC_Quadrum", true);
@@ -67,6 +69,7 @@ namespace RimRPC
         {
             listingStandard.CheckboxLabeled("RPC_ColonyLabel".Translate() + " ", ref Settings.RpcColony);
             listingStandard.CheckboxLabeled("RPC_ColonistCountLabel".Translate() + " ", ref Settings.RpcColonistCount);
+            listingStandard.CheckboxLabeled("RPC_BiomeLabel".Translate() + " ", ref Settings.RpcBiome);
             listingStandard.CheckboxLabeled("RPC_YearLabel".Translate() + " ", ref Settings.RpcYear);
             listingStandard.CheckboxLabeled("RPC_YearShortLabel".Translate() + " ", ref Settings.RpcYearShort);
             listingStandard.CheckboxLabeled("RPC_QuadrumLabel".Translate() + " ", ref Settings.RpcQuadrum);
